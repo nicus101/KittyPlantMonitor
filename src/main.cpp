@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <connect.h>
 #include <sleep.h>
+#include <temp.h>
 
 // used in debug purposes
 int waitcounter = 0;
@@ -13,11 +14,21 @@ void setup()
   connectbase();
 
   bootcounter();
+
+  if (SETUP_STATUS == 0)
+  {
+    while (!SETUP_STATUS);
+  }
 }
 
 void loop()
 {
   checkbase();
+
+  if (TEMP_READ_STATUS == false)
+  {
+    while (!TEMP_READ_STATUS);
+  }
 
   // wait and count to 5 before deep sleep
   while (waitcounter != 5)
