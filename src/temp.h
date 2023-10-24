@@ -9,9 +9,6 @@
 #define SENSOR_PIN5 6
 #define SENSOR_PIN6 7
 
-#define SETUP_STATUS
-#define TEMP_READ_STATUS
-
 OneWire oneWire1(SENSOR_PIN1);
 OneWire oneWire2(SENSOR_PIN2);
 OneWire oneWire3(SENSOR_PIN3);
@@ -29,9 +26,9 @@ DS18B20 TempSensor6(&oneWire6);
 uint32_t start, stop;
 
 // check if temp sensor is present and activate it
-void tempSensorDetect(int &SETUP_STATUS)
+void tempSensorDetect()
 {
-#define SETUP_STATUS false
+// bool SETUP_STATUS = false;
     if (TempSensor1.begin() == false)
     {
 #define Temp1
@@ -62,13 +59,13 @@ void tempSensorDetect(int &SETUP_STATUS)
 #define Temp6
         TempSensor6.setResolution(9);
     }
-#define SETUP_STATUS true
+// return SETUP_STATUS;
 }
 
 // get temps from activated sensors
 void getTemps()
 {
-#define TEMP_READ_STATUS false
+// TEMP_READ_STATUS = false;
     start = millis();
 
     uint32_t timeout = millis();
@@ -83,6 +80,7 @@ void getTemps()
         }
     }
     float t1 = TempSensor1.getTempC();
+    Serial.println(t1);
 #endif
 
 #ifdef Temp2
@@ -95,6 +93,7 @@ void getTemps()
         }
     }
     float t2 = TempSensor2.getTempC();
+    Serial.println(t2);
 #endif
 
 #ifdef Temp3
@@ -107,6 +106,7 @@ void getTemps()
         }
     }
     float t3 = TempSensor3.getTempC();
+    Serial.println(t3);
 #endif
 
 #ifdef Temp4
@@ -119,6 +119,7 @@ void getTemps()
         }
     }
     float t4 = TempSensor4.getTempC();
+    Serial.println(t4);
 #endif
 
 #ifdef Temp5
@@ -131,6 +132,7 @@ void getTemps()
         }
     }
     float t5 = TempSensor5.getTempC();
+    Serial.println(t5);
 #endif
 
 #ifdef Temp6
@@ -143,8 +145,10 @@ void getTemps()
         }
     }
     float t6 = TempSensor6.getTempC();
+    Serial.println(t6);
 #endif
     stop = millis();
 
-#define TEMP_READ_STATUS true
+// TEMP_READ_STATUS = true;
+
 }
