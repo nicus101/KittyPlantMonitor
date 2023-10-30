@@ -2,13 +2,12 @@
 #include <connect.h>
 #include <sleep.h>
 #include <moist.h>
-#include <temp2.h>
+#include <temp.h>
+#include <http.h>
 
 // used in debug purposes
 int waitcounter = 0;
 int waitcounter2 = 0;
-
-
 
 void setup()
 {
@@ -30,8 +29,8 @@ void setup()
 void loop()
 {
   checkbase();
- getTemps();
- 
+  getTemps();
+
   // if (TEMP_READ_STATUS == false)
   // {
   //   while (!TEMP_READ_STATUS);
@@ -52,7 +51,10 @@ void loop()
     delay(1000);
     ++waitcounter2;
   }
-  
+  Serial.print("id: ");
+  Serial.println(hostname);
+  SendTempData();
+  delay(5000);
   // go deep sleep
   // Serial.println("Going to sleep now");
   // Serial.flush();
